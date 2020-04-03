@@ -2,9 +2,7 @@
 #include <windows.h>
 using namespace std;
 
-class Node
-{
-public:
+struct Node {
 	int number;
 	Node* next;
 	Node* last;
@@ -14,9 +12,9 @@ Node* head;
 Node* tail;
 Node* ptrLast;
 
-void CreateList(int n) { // создание списка
+void CreateList(int n) { // СЃРѕР·РґР°РЅРёРµ СЃРїРёСЃРєР°
 	int numb;
-	cout << ("Введите Числa: ");
+	cout << ("Р’РІРµРґРёС‚Рµ Р§РёСЃР»a: ");
 	for (int i = 0; i < n; i++) {
 		cin >> numb;
 		Node* ptr = new Node;
@@ -38,9 +36,9 @@ void CreateList(int n) { // создание списка
 
 void SmeshList(int k) {
 	int x;
-	for (int i = 0; i < k; i++) { //цикл смещения на К
-		x = ptrLast->number;// сохраняем последнее значение
-		Node* ptrDelete = NULL; //удаляем последний элемент
+	for (int i = 0; i < k; i++) { //С†РёРєР» СЃРјРµС‰РµРЅРёСЏ РЅР° Рљ
+		x = ptrLast->number;// СЃРѕС…СЂР°РЅСЏРµРј РїРѕСЃР»РµРґРЅРµРµ Р·РЅР°С‡РµРЅРёРµ
+		Node* ptrDelete = NULL; //СѓРґР°Р»СЏРµРј РїРѕСЃР»РµРґРЅРёР№ СЌР»РµРјРµРЅС‚
 		ptrDelete = tail;
 		tail = ptrDelete->last;
 		tail->next = NULL;
@@ -48,7 +46,7 @@ void SmeshList(int k) {
 		delete ptrDelete;
 
 		Node* sec = NULL;
-		Node* ptr = new Node;// добавляем в начало списка элемент с сохраненным значением
+		Node* ptr = new Node;// РґРѕР±Р°РІР»СЏРµРј РІ РЅР°С‡Р°Р»Рѕ СЃРїРёСЃРєР° СЌР»РµРјРµРЅС‚ СЃ СЃРѕС…СЂР°РЅРµРЅРЅС‹Рј Р·РЅР°С‡РµРЅРёРµРј
 		ptr->number = x;
 		ptr->last = NULL;
 		sec = ptr;
@@ -58,11 +56,11 @@ void SmeshList(int k) {
 	}
 }
 
-void PrintList() { //Вывод списка
+void PrintList() { //Р’С‹РІРѕРґ СЃРїРёСЃРєР°
 	Node* ptr = NULL;
-	if (head == NULL) cout << ("\t!!! СПИСОК ПУСТ !!!\n\n");
+	if (head == NULL) cout << ("\t!!! РЎРџРРЎРћРљ РџРЈРЎРў !!!\n\n");
 	else {
-		cout << ("Список: \n\n");
+		cout << ("РЎРїРёСЃРѕРє: \n\n");
 		ptr = head;
 		while (1)
 		{
@@ -79,10 +77,10 @@ void PrintList() { //Вывод списка
 int main() {
 	setlocale(LC_ALL, "Russian");
 	int n,k;
-	cout << "Введите количество чисел: ";
+	cout << "Р’РІРµРґРёС‚Рµ РєРѕР»РёС‡РµСЃС‚РІРѕ С‡РёСЃРµР»: ";
 	cin >> n;
 	CreateList(n);
-	cout << "Введите К: ";
+	cout << "Р’РІРµРґРёС‚Рµ Рљ: ";
 	cin >> k;
 	SmeshList(k);
 	PrintList();
