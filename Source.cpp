@@ -1,54 +1,90 @@
 #include <iostream>
-
+#include <windows.h>
 using namespace std;
 
-void Shell(double* Arr, int n) { // Функция сортировки Шелла
-	double count;
-	int d = n, i, j;
-	d = d / 2; 
-	while (d > 0) { //С помощью d делим массив на группы до тех пор пока в группах не останется по 1 элементу
-		for (i = 0; i < n - d; i++) {
-			j = i;
-			while (j >= 0 && Arr[j] > Arr[j + d]) { //распределение чисел по группам
-				count = Arr[j];
-				Arr[j] = Arr[j + d];
-				Arr[j + d] = count;
-				j--;
-			}
+class Node
+{
+public:
+	int number;
+	Node* next;
+	Node* last;
+};
+
+Node* head;
+Node* tail;
+Node* ptrLast;
+
+void CreateList(int n) { // создание списка
+	int numb;
+	cout << ("Введите Числa: ");
+	for (int i = 0; i < n; i++) {
+		cin >> numb;
+		Node* ptr = new Node;
+		ptr->number = numb;
+		ptr->next = NULL;
+		tail = ptr;
+		if (head == NULL) {
+			head = ptr;
+			ptrLast = ptr;
+			ptr->last = NULL;
 		}
-		d = d / 2;
-	}
-	for (i = 0; i < n; i++) {
-		cout << Arr[i] << " "; //вывод массива
+		else {
+			ptr->last = ptrLast;
+			ptrLast->next = ptr;
+			ptrLast = ptr;
+		}
 	}
 }
 
-int main()
-{
-	setlocale(0, "");
-	struct Vector {
-		double a;
-		double b;
-	};
-	int n = 1, k, m;
-	double* Arr = new double[n];
-	while (n % 2 != 0) {
-		cout << "Введите четное количество чисел в массиве: ";
-		cin >> n;
+void SmeshList(int k) {
+	int x;
+	for (int i = 0; i < k; i++) { //цикл смещения на К
+		x = ptrLast->number;// сохраняем последнее значение
+		Node* ptrDelete = NULL; //удаляем последний элемент
+		ptrDelete = tail;
+		tail = ptrDelete->last;
+		tail->next = NULL;
+		ptrLast = tail;
+		delete ptrDelete;
+
+		Node* sec = NULL;
+		Node* ptr = new Node;// добавляем в начало списка элемент с сохраненным значением
+		ptr->number = x;
+		ptr->last = NULL;
+		sec = ptr;
+		ptr->next = head;
+		head->last = ptr;
+		head = ptr;
 	}
-	cout << "Введите " << n << " чисел: "; // массив с числами для векторов
-	for (k = 0; k < n; k++) {
-		cin >> Arr[k];
+}
+
+void PrintList() { //Вывод списка
+	Node* ptr = NULL;
+	if (head == NULL) cout << ("\t!!! СПИСОК ПУСТ !!!\n\n");
+	else {
+		cout << ("Список: \n\n");
+		ptr = head;
+		while (1)
+		{
+			cout << ptr->number << " ";
+			if (ptr->next == 0)
+				break;
+			ptr = ptr->next;
+		}
+		cout << "\n\n";
 	}
-	Shell(Arr, n); //сортируем созданный массив
-	m = n / 2;
-	Vector *v = new Vector[m]; //для представления векторов создал массив структур
-	cout << endl << "Несравнимые вектора:";
-	for (k = 0; k < m; k++) { //заполнение векторов числами с разных концов отсортированного массива
-		v[k].a = Arr[k];      
-		v[k].b = Arr[n - 1 - k];
-		cout << " (" << v[k].a << ";" << v[k].b << ") ";
-	}
-	system("pause");
+}
+
+
+int main() {
+	setlocale(LC_ALL, "Russian");
+	int n,k;
+	cout << "Введите количество чисел: ";
+	cin >> n;
+	CreateList(n);
+	cout << "Введите К: ";
+	cin >> k;
+	SmeshList(k);
+	PrintList();
 	return 0;
 }
